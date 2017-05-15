@@ -1,4 +1,4 @@
-require_relative 'entry'
+require_relative 'entry.rb'
 
 class AddressBook
   attr_reader :entries
@@ -9,12 +9,24 @@ class AddressBook
 
   def add_entry(name, phone_number, email)
     index = 0
-    entries.each do |entry|
-    if name < entry.name
-      break
+    @entries.each do |entry|
+      if name < entry.name
+        break
+      end
+      index+= 1
     end
-    index+= 1
+    @entries.insert(index, Entry.new(name, phone_number, email))
   end
-  entries.insert(index, Entry.new(name, phone_number, email))
+
+  def remove_entry(name, phone_number, email)
+    entry_to_delete = nil
+
+    @entries.each do |entry|
+      if name == entry.name && phone_number == entry.phone_number && email = entry.email
+        entry_to_delete = entry
+      end
+    end
+    @entries.delete(entry_to_delete)
   end
- end
+
+end
